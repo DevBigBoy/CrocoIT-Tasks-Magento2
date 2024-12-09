@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+
+    <!-- Category Table -->
+    <table name="croco_articles_category" resource="default" engine="innodb" comment="Croco Articles Categories">
+        <column xsi:type="int" name="category_id" unsigned="true" nullable="false" identity="true" comment="Category ID"/>
+        <column xsi:type="varchar" name="name" nullable="false" length="255" comment="Category Name"/>
+        <column xsi:type="text" name="description" nullable="true" comment="Category Description"/>
+        <column xsi:type="int" name="parent_id" unsigned="true" nullable="true" comment="Parent Category ID"/>
+
+        <!-- Primary Key -->
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="category_id"/>
+        </constraint>
+
+        <!-- Foreign Key for Self-Referencing Parent-Child Relationship -->
+        <constraint xsi:type="foreign" referenceId="CROCO_ARTICLES_CATEGORY_PARENT_ID" table="croco_articles_category" column="parent_id"
+                    referenceTable="croco_articles_category" referenceColumn="category_id" onDelete="CASCADE"/>
+
+        <!-- Indexes -->
+        <index referenceId="CATEGORY_PARENT_ID_IDX">
+            <column name="parent_id"/>
+        </index>
+        <index referenceId="CATEGORY_NAME_IDX">
+            <column name="name"/>
+        </index>
+    </table>
+
+    <!-- Article Table -->
+    <table name="croco_articles_article" resource="default" engine="innodb" comment="Croco Articles Posts">
+        <column xsi:type="int" name="article_id" unsigned="true" nullable="false" identity="true" comment="Article ID"/>
+        <column xsi:type="varchar" name="title" nullable="false" length="255" comment="Article Title"/>
+        <column xsi:type="text" name="short_description" nullable="true" comment="Article Short Description"/>
+        <column xsi:type="text" name="body" nullable="false" comment="Article Body"/>
+        <column xsi:type="varchar" name="image" nullable="true" length="255" comment="Article Image"/>
+        <column xsi:type="timestamp" name="published_at" nullable="true" comment="Published Date"/>
+        <column xsi:type="smallint" name="status" nullable="false" default="1" comment="Article Status"/>
+
+        <!-- Primary Key -->
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="article_id"/>
+        </constraint>
+
+        <!-- Indexes -->
+        <index referenceId="ARTICLE_TITLE_IDX">
+            <column name="title"/>
+        </index>
+    </table>
+
+    <!-- Many-to-Many Relation Table (Articles to Categories) -->
+    <table name="croco_articles_article_category" resource="default" engine="innodb" comment="Article to Category Relation">
+        <column xsi:type="int" name="article_id" unsigned="true" nullable="false" comment="Article ID"/>
+        <column xsi:type="int" name="category_id" unsigned="true" nullable="false" comment="Category ID"/>
+
+        <!-- Primary Key Constraint for Composite Key -->
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="article_id"/>
+            <column name="category_id"/>
+        </constraint>
+
+        <!-- Foreign Key to Articles Table -->
+        <constraint xsi:type="foreign" referenceId="FK_ARTICLE_CATEGORY_ARTICLE_ID" table="croco_articles_article_category" column="article_id"
+                    referenceTable="croco_articles_article" referenceColumn="article_id" onDelete="CASCADE"/>
+
+        <!-- Foreign Key to Categories Table -->
+        <constraint xsi:type="foreign" referenceId="FK_ARTICLE_CATEGORY_CATEGORY_ID" table="croco_articles_article_category" column="category_id"
+                    referenceTable="croco_articles_category" referenceColumn="category_id" onDelete="CASCADE"/>
+
+        <!-- Indexes -->
+        <index referenceId="ARTICLE_ID_IDX">
+            <column name="article_id"/>
+        </index>
+        <index referenceId="CATEGORY_ID_IDX">
+            <column name="category_id"/>
+        </index>
+    </table>
+</schema>

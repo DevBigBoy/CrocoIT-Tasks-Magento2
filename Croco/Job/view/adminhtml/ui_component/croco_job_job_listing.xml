@@ -1,0 +1,176 @@
+<?xml version="1.0"?>
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+
+    <!-- General configuration for the Job grid -->
+    <argument name="data" xsi:type="array">
+        <!-- JavaScript configuration for grid provider dependencies -->
+        <item name="js_config" xsi:type="array">
+            <!-- Specifies the JavaScript provider, which connects the UI component with the data source -->
+            <item name="provider" xsi:type="string">croco_job_job_listing.croco_job_job_listing_data_source</item>
+            <!-- Dependencies tell Magento which other components this grid relies on -->
+            <item name="deps" xsi:type="string">croco_job_job_listing.croco_job_job_listing_data_source</item>
+        </item>
+
+        <!-- Spinner: Shows while the grid data is loading, references columns defined below -->
+        <item name="spinner" xsi:type="string">job_columns</item>
+
+        <!-- Button for adding a new job entry, with label, class, and URL -->
+        <item name="buttons" xsi:type="array">
+            <item name="add" xsi:type="array">
+                <item name="name" xsi:type="string">add</item>
+                <item name="label" xsi:type="string" translate="true">Add New Job</item>
+                <item name="class" xsi:type="string">primary</item>
+                <!-- URL where the "Add New Job" button should direct, following the standard route format -->
+                <item name="url" xsi:type="string">*/*/new</item>
+            </item>
+        </item>
+    </argument>
+
+    <!-- Data Source Configuration: Defines where the grid gets its data -->
+    <dataSource name="croco_job_job_listing_data_source">
+        <argument name="dataProvider" xsi:type="configurableObject">
+            <!-- Class for data provider, a PHP class that supplies the grid data -->
+            <argument name="class" xsi:type="string">Croco\Job\Ui\DataProvider\Job\DataProvider</argument>
+            <argument name="name" xsi:type="string">croco_job_job_listing_data_source</argument>
+            <!-- Primary field name (unique identifier) for data records -->
+            <argument name="primaryFieldName" xsi:type="string">entity_id</argument>
+            <!-- Field name used to request individual records by ID -->
+            <argument name="requestFieldName" xsi:type="string">id</argument>
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <!-- JavaScript component responsible for managing the grid data -->
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/provider</item>
+                    <!-- URL to update the grid content asynchronously -->
+                    <item name="update_url" xsi:type="url" path="mui/index/render"/>
+                    <item name="storageConfig" xsi:type="array">
+                        <!-- Specifies the index field for data storage, using `entity_id` -->
+                        <item name="indexField" xsi:type="string">entity_id</item>
+                    </item>
+                </item>
+            </argument>
+        </argument>
+    </dataSource>
+
+    <!-- Columns Configuration: Defines the columns displayed in the job listing grid -->
+    <columns name="job_columns">
+        <!-- Configuration to save filter/bookmark states for this grid -->
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="storageConfig" xsi:type="array">
+                    <item name="provider" xsi:type="string">croco_job_job_listing.croco_job_job_listing.listing_top.bookmarks</item>
+                    <item name="namespace" xsi:type="string">current</item>
+                </item>
+            </item>
+        </argument>
+
+        <!-- Selections Column: Adds a checkbox column for selecting multiple rows -->
+        <selectionsColumn name="ids">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="indexField" xsi:type="string">entity_id</item>
+                </item>
+            </argument>
+        </selectionsColumn>
+
+        <!-- Entity ID Column -->
+        <column name="entity_id">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">ID</item>
+                    <item name="filter" xsi:type="string">textRange</item>
+                    <item name="sorting" xsi:type="string">asc</item>
+                </item>
+            </argument>
+        </column>
+
+        <!-- Title Column -->
+        <column name="title">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Title</item>
+                    <item name="filter" xsi:type="string">text</item>
+                </item>
+            </argument>
+        </column>
+
+        <!-- Type Column -->
+        <column name="type">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Type</item>
+                    <item name="filter" xsi:type="string">text</item>
+                </item>
+            </argument>
+        </column>
+
+        <!-- Location Column -->
+        <column name="location">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Location</item>
+                    <item name="filter" xsi:type="string">text</item>
+                </item>
+            </argument>
+        </column>
+
+        <!-- Date Column: Configured to display dates with a date range filter -->
+        <column name="date" class="Magento\Ui\Component\Listing\Columns\Date">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Date</item>
+                    <item name="filter" xsi:type="string">dateRange</item>
+                    <item name="dataType" xsi:type="string">date</item>
+                </item>
+            </argument>
+        </column>
+
+        <!-- Status Column: Select-type column, with options sourced from a custom Status model -->
+        <column name="status">
+            <argument name="data" xsi:type="array">
+                <!-- Specifies source model to provide options for this select column -->
+                <item name="options" xsi:type="object">Croco\Job\Model\Source\Job\Status</item>
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Status</item>
+                    <item name="filter" xsi:type="string">select</item>
+                    <item name="dataType" xsi:type="string">select</item>
+                </item>
+            </argument>
+        </column>
+
+        <!-- Description Column -->
+        <column name="description">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Description</item>
+                    <item name="filter" xsi:type="string">text</item>
+                </item>
+            </argument>
+        </column>
+
+        <!-- Department Column: Select-type with options from a Department source model -->
+        <column name="department_id">
+            <argument name="data" xsi:type="array">
+                <!-- Defines a source model for options in the select menu -->
+                <item name="options" xsi:type="object">Croco\Job\Model\Source\Department</item>
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Department</item>
+                    <item name="filter" xsi:type="string">select</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/select</item>
+                    <item name="editor" xsi:type="string">select</item>
+                    <item name="dataType" xsi:type="string">select</item>
+                </item>
+            </argument>
+        </column>
+
+        <!-- Actions Column: Custom actions like edit/delete, configured with a custom JobActions class -->
+        <actionsColumn name="actions" class="Croco\Job\Ui\Component\Listing\Column\JobActions">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <!-- Identifies records by entity_id in action URLs -->
+                    <item name="indexField" xsi:type="string">entity_id</item>
+                </item>
+            </argument>
+        </actionsColumn>
+
+    </columns>
+</listing>

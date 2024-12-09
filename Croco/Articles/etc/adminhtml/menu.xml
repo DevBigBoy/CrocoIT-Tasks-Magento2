@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Croco. All rights reserved.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <!-- Root menu item for Articles module -->
+        <add id="Croco_Articles::articles" title="Articles" translate="title" module="Croco_Articles" sortOrder="80" resource="Croco_Articles::articles" />
+
+        <!-- Sub-menu item for managing Categories -->
+        <add id="Croco_Articles::categories" title="Manage Categories" translate="title" module="Croco_Articles" sortOrder="10"
+             parent="Croco_Articles::articles" action="croco_articles/category/index" resource="Croco_Articles::categories" />
+
+        <!-- Sub-menu item for managing Articles -->
+        <add id="Croco_Articles::articles_manage" title="Manage Articles" translate="title" module="Croco_Articles" sortOrder="20"
+             parent="Croco_Articles::articles" action="croco_articles/article/index" resource="Croco_Articles::articles_manage" />
+    </menu>
+</config>

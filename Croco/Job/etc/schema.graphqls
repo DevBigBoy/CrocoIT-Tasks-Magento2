@@ -1,0 +1,39 @@
+type Query {
+    getJob(id: Int!): Job @resolver(class: "Croco\\Job\\Model\\Resolver\\JobResolver")
+    getAllJobs: [Job] @resolver(class: "Croco\\Job\\Model\\Resolver\\JobListResolver")
+    getDepartment(id: Int!): Department @resolver(class: "Croco\\Job\\Model\\Resolver\\DepartmentResolver")
+    getAllDepartments: [Department] @resolver(class: "Croco\\Job\\Model\\Resolver\\DepartmentListResolver")
+}
+
+type Mutation {
+    createJob(input: JobInput!): Job @resolver(class: "Croco\\Job\\Model\\Resolver\\JobCreateResolver")
+    updateJob(id: Int!, input: JobInput!): Job @resolver(class: "Croco\\Job\\Model\\Resolver\\JobUpdateResolver")
+    deleteJob(id: Int!): Boolean @resolver(class: "Croco\\Job\\Model\\Resolver\\JobDeleteResolver")
+}
+
+type Job {
+    id: ID!
+    title: String!
+    type: String
+    location: String
+    date: String
+    status: String
+    description: String
+    department: Department
+}
+
+
+type Department {
+    id: ID!
+    name: String!
+}
+
+input JobInput {
+    title: String!
+    type: String
+    location: String
+    date: String
+    status: String
+    department_id: Int!
+    description: String
+}

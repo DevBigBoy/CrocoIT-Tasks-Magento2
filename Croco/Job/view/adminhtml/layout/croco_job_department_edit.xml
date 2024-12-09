@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="content">
+            <block class="Croco\Job\Block\Adminhtml\Department\Edit" name="croco_job_department_edit">
+<!--                <block class="Croco\Job\Block\Adminhtml\Department\Edit\Form" name="croco_job_department_edit_form"/>-->
+            </block>
+        </referenceContainer>
+    </body>
+</page>

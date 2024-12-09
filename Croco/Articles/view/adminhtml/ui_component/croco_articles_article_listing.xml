@@ -1,0 +1,167 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Croco. All rights reserved.
+ */
+-->
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">croco_articles_article_listing.croco_articles_article_listing_data_source</item>
+            <item name="deps" xsi:type="string">croco_articles_article_listing.croco_articles_article_listing_data_source</item>
+        </item>
+        <item name="spinner" xsi:type="string">article_columns</item>
+
+        <item name="buttons" xsi:type="array">
+            <item name="add" xsi:type="array">
+                <item name="name" xsi:type="string">add</item>
+                <item name="label" xsi:type="string" translate="true">Add New Article</item>
+                <item name="class" xsi:type="string">primary</item>
+                <item name="url" xsi:type="string">*/*/new</item>
+            </item>
+        </item>
+    </argument>
+
+    <!-- Data Source -->
+    <dataSource name="croco_articles_article_listing_data_source">
+        <argument name="dataProvider" xsi:type="configurableObject">
+            <argument name="class" xsi:type="string">Croco\Articles\Ui\DataProvider\ArticleDataProvider</argument>
+            <argument name="name" xsi:type="string">croco_articles_article_listing_data_source</argument>
+            <argument name="primaryFieldName" xsi:type="string">article_id</argument>
+            <argument name="requestFieldName" xsi:type="string">article_id</argument>
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/provider</item>
+                    <item name="update_url" xsi:type="url" path="mui/index/render"/>
+                    <item name="storageConfig" xsi:type="array">
+                        <item name="indexField" xsi:type="string">article_id</item>
+                    </item>
+                </item>
+            </argument>
+        </argument>
+    </dataSource>
+
+    <!-- Columns -->
+    <columns name="article_columns">
+        <!-- Checkbox Selections Column for Multi-Select Actions -->
+        <selectionsColumn name="ids">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="resizeEnabled" xsi:type="boolean">false</item>
+                    <item name="resizeDefaultWidth" xsi:type="string">55</item>
+                    <item name="indexField" xsi:type="string">article_id</item>
+                </item>
+            </argument>
+        </selectionsColumn>
+
+        <!-- Article ID Column -->
+        <column name="article_id" class="Magento\Ui\Component\Listing\Columns\Column">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Article ID</label>
+                <sorting>asc</sorting>
+            </settings>
+        </column>
+
+        <!-- Title Column -->
+        <column name="title" class="Magento\Ui\Component\Listing\Columns\Column">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Title</label>
+                <sorting>asc</sorting>
+            </settings>
+        </column>
+
+        <!-- Short Description Column -->
+        <column name="short_description" class="Magento\Ui\Component\Listing\Columns\Column">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Short Description</label>
+            </settings>
+        </column>
+
+
+        <column name="image" class="Croco\Articles\Ui\Component\Listing\Column\Thumbnail">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/thumbnail</item>
+                    <item name="sortable" xsi:type="boolean">false</item>
+                    <item name="altField" xsi:type="string">title</item> <!-- Use 'title' as the alt text field -->
+                    <item name="has_preview" xsi:type="boolean">true</item>
+                    <item name="label" xsi:type="string" translate="true">Image</item>
+                    <item name="sortOrder" xsi:type="number">20</item>
+                </item>
+            </argument>
+        </column>
+
+
+
+        <!-- Status Column -->
+<!--        <column name="status" class="Magento\Ui\Component\Listing\Columns\Column">-->
+<!--            <settings>-->
+<!--                <filter>select</filter>-->
+<!--                <label translate="true">Status</label>-->
+<!--                <options class="Croco\Articles\Model\Source\Status"/>-->
+<!--            </settings>-->
+<!--        </column>-->
+
+        <column name="status" class="Croco\Articles\Ui\Component\Listing\Column\Status">
+            <settings>
+                <filter>select</filter>
+                <label translate="true">Status</label>
+                <options>
+                    <option name="1" xsi:type="string" translate="true">Active</option>
+                    <option name="0" xsi:type="string" translate="true">Inactive</option>
+                </options>
+                <dataType>text</dataType>
+            </settings>
+        </column>
+
+        <!-- Published At Column -->
+        <column name="published_at" class="Magento\Ui\Component\Listing\Columns\Column">
+            <settings>
+                <filter>dateRange</filter>
+                <label translate="true">Published Date</label>
+            </settings>
+        </column>
+
+
+
+        <!-- Actions Column -->
+        <actionsColumn name="actions" class="Croco\Articles\Ui\Component\Listing\Column\ArticleActions">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="resizeEnabled" xsi:type="boolean">false</item>
+                    <item name="resizeDefaultWidth" xsi:type="string">107</item>
+                    <item name="indexField" xsi:type="string">article_id</item>
+
+                    <item name="actions" xsi:type="array">
+                        <!-- Edit Action -->
+                        <item name="edit" xsi:type="array">
+                            <item name="href" xsi:type="string">croco_articles/article/edit</item>
+                            <item name="label" xsi:type="string" translate="true">Edit</item>
+                            <item name="hidden" xsi:type="boolean">false</item>
+                        </item>
+
+                        <!-- Delete Action -->
+                        <item name="delete" xsi:type="array">
+                            <item name="href" xsi:type="string">croco_articles/article/delete</item>
+                            <item name="label" xsi:type="string" translate="true">Delete</item>
+                            <item name="confirm" xsi:type="array">
+                                <item name="title" xsi:type="string" translate="true">Delete Article</item>
+                                <item name="message" xsi:type="string" translate="true">Are you sure you want to delete this article?</item>
+                            </item>
+                            <item name="hidden" xsi:type="boolean">false</item>
+                        </item>
+                    </item>
+                </item>
+            </argument>
+        </actionsColumn>
+
+
+        <!-- Actions Column -->
+    </columns>
+
+</listing>

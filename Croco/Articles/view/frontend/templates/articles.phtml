@@ -1,0 +1,60 @@
+<?php
+$articles = $block->getArticles();
+$categoriesTree = $block->getData('categoriesTree');
+
+/**
+ * Recursive function to display categories as a nested tree with clickable links.
+ */
+function renderCategoryTree($categories) {
+    echo '<ul>';
+    foreach ($categories as $category) {
+        echo '<li>';
+        $categoryId = htmlspecialchars($category['category_id'] ?? '');
+        $categoryName = htmlspecialchars($category['name'] ?? '');
+        $categoryDescription = htmlspecialchars($category['description'] ?? '');
+
+        // Wrap category name in a link
+        echo '<a href="?category_id=' . $categoryId . '"><strong>' . $categoryName . '</strong></a>: ' . $categoryDescription;
+
+        if (!empty($category['children'])) {
+            renderCategoryTree($category['children']);
+        }
+        echo '</li>';
+    }
+    echo '</ul>';
+}
+?>
+
+<div class="categories-tree">
+    <h2>Categories Tree</h2>
+    <?php renderCategoryTree($categoriesTree); ?>
+</div>
+
+<div class="articles-list">
+    <h2>Articles</h2>
+    <?php if (!empty($articles)): ?>
+        <?php foreach ($articles as $article): ?>
+            <div class="article">
+                <h3><?= htmlspecialchars($article['title'] ?? '') ?></h3>
+                <p><strong>Description:</strong> <?= htmlspecialchars($article['short_description'] ?? '') ?></p>
+                <p><strong>Content:</strong> <?= htmlspecialchars($article['body'] ?? '') ?></p>
+
+                <?php if (!empty($article['categories'])): ?>
+                    <div class="categories">
+                        <h4>Categories:</h4>
+                        <ul>
+                            <?php foreach ($article['categories'] as $category): ?>
+                                <li>
+                                    <?= htmlspecialchars($category['name'] ?? '') ?> - <?= htmlspecialchars($category['description'] ?? '') ?>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
+                <?php endif; ?>
+            </div>
+            <hr>
+        <?php endforeach; ?>
+    <?php else: ?>
+        <p>No articles found.</p>
+    <?php endif; ?>
+</div>

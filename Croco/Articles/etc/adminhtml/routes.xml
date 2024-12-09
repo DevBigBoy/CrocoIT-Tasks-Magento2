@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Croco. All rights reserved.
+ * Admin routing configuration for Croco Articles module.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:App/etc/routes.xsd">
+    <router id="admin">
+        <!-- Route ID 'croco_articles' and front name 'articles' to match the module's functionality -->
+        <route id="croco_articles" frontName="croco_articles">
+            <module name="Croco_Articles" before="Magento_Backend"/>
+        </route>
+    </router>
+</config>

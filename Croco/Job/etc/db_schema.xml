@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+
+    <!-- Table: department -->
+    <table name="croco_job_department" resource="default" engine="innodb" comment="Department Table">
+        <column xsi:type="int" name="entity_id" unsigned="true" nullable="false" identity="true" comment="Department ID"/>
+        <column xsi:type="varchar" name="name" nullable="false" comment="Department Name"/>
+        <column xsi:type="text" name="description" nullable="true" comment="Department Description"/>
+
+        <constraint xsi:type="primary" referenceId="CROCO_JOB_DEPARTMENT_PK">
+            <column name="entity_id"/>
+        </constraint>
+
+        <!-- Unique constraint for department name to prevent duplicates -->
+        <constraint xsi:type="unique" referenceId="CROCO_JOB_DEPARTMENT_NAME_UNQ">
+            <column name="name"/>
+        </constraint>
+    </table>
+
+    <!-- Table: job -->
+    <table name="croco_job_job" resource="default" engine="innodb" comment="Job Table">
+        <column xsi:type="int" name="entity_id" unsigned="true" nullable="false" identity="true" comment="Job ID"/>
+        <column xsi:type="varchar" name="title" nullable="false" comment="Job Title"/>
+        <column xsi:type="varchar" name="type" nullable="false" comment="Job Type (e.g., CDI, CDD)"/>
+        <column xsi:type="varchar" name="location" nullable="true" comment="Job Location"/>
+        <column xsi:type="date" name="date" nullable="true" comment="Job Start Date"/>
+        <column xsi:type="tinyint" name="status" nullable="false" default="0" comment="Job Status"/>
+        <column xsi:type="text" name="description" nullable="true" comment="Job Description"/>
+        <column xsi:type="int" name="department_id" unsigned="true" nullable="false" comment="Linked Department ID"/>
+
+        <constraint xsi:type="primary" referenceId="CROCO_JOB_JOB_PK">
+            <column name="entity_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="CROCO_JOB_JOB_DEPARTMENT_FK" table="croco_job_job" column="department_id" referenceTable="croco_job_department" referenceColumn="entity_id" onDelete="CASCADE"/>
+
+        <!-- Indexes for commonly filtered columns -->
+        <index referenceId="CROCO_JOB_JOB_TITLE_IDX">
+            <column name="title"/>
+        </index>
+        <index referenceId="CROCO_JOB_JOB_TYPE_IDX">
+            <column name="type"/>
+        </index>
+        <index referenceId="CROCO_JOB_JOB_LOCATION_IDX">
+            <column name="location"/>
+        </index>
+        <index referenceId="CROCO_JOB_JOB_STATUS_IDX">
+            <column name="status"/>
+        </index>
+        <index referenceId="CROCO_JOB_JOB_DEPARTMENT_ID_IDX">
+            <column name="department_id"/>
+        </index>
+    </table>
+
+    <!-- Table: tag -->
+    <table name="croco_job_tag" resource="default" engine="innodb" comment="Tag Table">
+        <column xsi:type="int" name="entity_id" unsigned="true" nullable="false" identity="true" comment="Tag ID"/>
+        <column xsi:type="varchar" name="name" nullable="false" comment="Tag Name"/>
+        <column xsi:type="text" name="description" nullable="true" comment="Tag Description"/>
+
+        <constraint xsi:type="primary" referenceId="CROCO_JOB_TAG_PK">
+            <column name="entity_id"/>
+        </constraint>
+
+        <!-- Unique constraint for tag name to prevent duplicates -->
+        <constraint xsi:type="unique" referenceId="CROCO_JOB_TAG_NAME_UNQ">
+            <column name="name"/>
+        </constraint>
+    </table>
+
+    <!-- Table: job_tag (Many-to-Many Relationship Table) -->
+    <table name="croco_job_job_tag" resource="default" engine="innodb" comment="Job to Tag Link Table">
+        <column xsi:type="int" name="job_id" unsigned="true" nullable="false" comment="Job ID"/>
+        <column xsi:type="int" name="tag_id" unsigned="true" nullable="false" comment="Tag ID"/>
+
+        <constraint xsi:type="primary" referenceId="CROCO_JOB_JOB_TAG_PK">
+            <column name="job_id"/>
+            <column name="tag_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="CROCO_JOB_JOB_TAG_JOB_FK" table="croco_job_job_tag" column="job_id" referenceTable="croco_job_job" referenceColumn="entity_id" onDelete="CASCADE"/>
+        <constraint xsi:type="foreign" referenceId="CROCO_JOB_JOB_TAG_TAG_FK" table="croco_job_job_tag" column="tag_id" referenceTable="croco_job_tag" referenceColumn="entity_id" onDelete="CASCADE"/>
+
+        <!-- Adding indexes for the link table columns -->
+        <index referenceId="CROCO_JOB_JOB_TAG_JOB_ID_IDX">
+            <column name="job_id"/>
+        </index>
+        <index referenceId="CROCO_JOB_JOB_TAG_TAG_ID_IDX">
+            <column name="tag_id"/>
+        </index>
+    </table>
+</schema>

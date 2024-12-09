@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!-- app/code/Croco/Articles/view/adminhtml/layout/croco_articles_category_edit.xml -->
+<!--<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">-->
+<!--    <body>-->
+<!--        <referenceContainer name="content">-->
+<!--            &lt;!&ndash; Block for the Edit Category form &ndash;&gt;-->
+<!--&lt;!&ndash;            <block class="Croco\Articles\Block\Adminhtml\Category\Edit" name="croco_articles_category_edit">&ndash;&gt;-->
+<!--&lt;!&ndash;                &lt;!&ndash; Add additional configurations or child blocks here if needed &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;            </block>&ndash;&gt;-->
+<!--        </referenceContainer>-->
+<!--    </body>-->
+<!--</page>-->
+
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="content">
+            <uiComponent name="croco_articles_category_form"/>
+        </referenceContainer>
+    </body>
+</page>

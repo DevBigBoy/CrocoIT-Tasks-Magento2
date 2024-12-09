@@ -1,0 +1,30 @@
+type Query {
+    articles: [Article] @resolver(class: "Croco\\Articles\\Model\\Resolver\\Articles")
+    categoriesTree: [CategoryTree] @resolver(class: "Croco\\Articles\\Model\\Resolver\\CategoriesTree")
+    articlesByCategoryId(category_id: Int!): [Article] @resolver(class: "Croco\\Articles\\Model\\Resolver\\ArticlesByCategoryId")
+
+}
+
+type Article {
+    article_id: Int
+    title: String
+    short_description: String
+    body: String
+    image: String
+    published_at: String
+    status: Int
+    categories: [Category]
+}
+
+type Category {
+    category_id: Int
+    name: String
+    description: String
+}
+
+type CategoryTree {
+    category_id: Int
+    name: String
+    description: String
+    children: [CategoryTree]
+}

@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:App/etc/routes.xsd">
+    <!--    <router id="standard">: Specifies that this route is for frontend pages.  -->
+    <router id="standard">
+        <!--   <route id="jobs" frontName="jobs">: Defines a custom route with the URL prefix /jobs/, linked to the Croco_Job module  -->
+        <route id="jobs" frontName="jobs">
+            <!--  <module name="Croco_Job" />: Specifies that the Croco_Job module will handle this route. -->
+            <module name="Croco_Job" />
+        </route>
+    </router>
+</config>

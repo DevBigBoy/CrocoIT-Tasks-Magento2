@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework/Menu/etc/menu.xsd">
+
+    <menu>
+        <!-- Top-level menu for Job Management -->
+        <add id="Croco_Job::job_management" title="Jobs" module="Croco_Job" sortOrder="100" resource="Croco_Job::job_management" />
+
+        <!-- Sub-menu for Departments -->
+        <add id="Croco_Job::department" title="Departments" module="Croco_Job" sortOrder="10" parent="Croco_Job::job_management" action="croco_job/department/index" resource="Croco_Job::department_view" />
+
+        <!-- Sub-menu for Jobs -->
+        <add id="Croco_Job::job" title="Jobs" module="Croco_Job" sortOrder="20" parent="Croco_Job::job_management" action="croco_job/job/index" resource="Croco_Job::job_view" />
+
+        <!-- Sub-menu for Tags -->
+        <add id="Croco_Job::tag" title="Tags" module="Croco_Job" sortOrder="30" parent="Croco_Job::job_management" action="croco_job/tag/index" resource="Croco_Job::tag_view" />
+    </menu>
+</config>

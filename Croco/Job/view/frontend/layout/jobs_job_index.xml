@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!--<route_id>_<controller_name>_<action_name>.xml-->
+<!--    jobs_index_list.xml-->
+
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd" layout="2columns-right">
+    <head>
+<!--  app/code/Croco/Job/view/frontend/web/css/jobs.css     -->
+        <css src="Croco_job::jobs.css"/>
+    </head>
+    <body>
+        <referenceContainer name="content">
+            <block class="Croco\Job\Block\Job\ListJob" name="jobs_list" template="job/list.phtml" />
+        </referenceContainer>
+    </body>
+</page>

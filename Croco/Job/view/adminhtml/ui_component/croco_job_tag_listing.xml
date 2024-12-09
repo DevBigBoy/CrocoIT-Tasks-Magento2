@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="component" xsi:type="string">Magento_Ui/js/grid/listing</item>
+        </item>
+        <item name="spinner" xsi:type="string">tag_columns</item>
+    </argument>
+
+    <dataSource name="croco_job_tag_listing_data_source">
+        <argument name="dataProvider" xsi:type="configurableObject">
+            <argument name="class" xsi:type="string">Croco\Job\Ui\DataProvider\Tag\DataProvider</argument>
+            <argument name="name" xsi:type="string">croco_job_tag_listing_data_source</argument>
+            <argument name="primaryFieldName" xsi:type="string">entity_id</argument>
+            <argument name="requestFieldName" xsi:type="string">entity_id</argument>
+        </argument>
+    </dataSource>
+
+    <columns name="tag_columns">
+        <column name="entity_id">
+            <settings>
+                <label translate="true">ID</label>
+                <filter>textRange</filter>
+            </settings>
+        </column>
+        <column name="name">
+            <settings>
+                <label translate="true">Name</label>
+                <filter>text</filter>
+            </settings>
+        </column>
+        <column name="description">
+            <settings>
+                <label translate="true">Description</label>
+                <filter>text</filter>
+            </settings>
+        </column>
+    </columns>
+
+    <massaction name="tag_massaction" >
+        <action name="delete">
+            <settings>
+                <confirm>
+                    <title translate="true">Delete</title>
+                    <message translate="true">Are you sure you want to delete the selected items?</message>
+                </confirm>
+                <url path="croco_job/tag/massDelete"/>
+                <type>delete</type>
+                <label translate="true">Delete</label>
+            </settings>
+        </action>
+    </massaction>
+</listing>
